@@ -42,3 +42,28 @@ In these commands:
 - `my_program.cu` is the input CUDA source file.
 
 Make sure to adjust the compute capability and target architecture according to your GPU's specifications.
+ 
+### Compiling for Multiple Architectures
+
+You can compile your CUDA program for multiple architectures and ASM versions simultaneously by specifying multiple `-arch` and `-code` flags in the `nvcc` command. This is useful if you want your program to be compatible with different GPU architectures.
+
+For example, to compile for both compute capability 7.5 and 8.0, you can use the following command:
+```sh
+nvcc -gencode -arch=compute_75 -code=sm_75 -gencode -arch=compute_80 -code=sm_80 -o my_program_multi my_program.cu
+```
+You can simplifiy it as
+```sh 
+nvcc -gencode arch=sm_80 demo.cu demo
+# equals to 
+nvcc -gencode arch=compute_80 -code=sm_80 demo.cu demo
+```
+In this command:
+- `-arch=compute_75` and `-arch=compute_80` specify the compute capabilities.
+- `-code=sm_75` and `-code=sm_80` specify the target architectures.
+- `-o my_program_multi` specifies the output file name.
+- `my_program.cu` is the input CUDA source file.
+
+This will generate a single executable that supports both compute capability 7.5 and 8.0, making your program more versatile and compatible with a wider range of GPUs.
+
+The process of compilation
+![the compile process](image.png)
