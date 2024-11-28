@@ -1,0 +1,2 @@
+## A simple notebook as a CUDA_CPP starter
+This notebook provides a basic introduction to CUDA programming with C++. It covers the fundamental concepts and includes simple examples to help you get started with parallel programming on NVIDIA GPUs.
