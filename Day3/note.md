@@ -67,3 +67,9 @@ This will generate a single executable that supports both compute capability 7.5
 
 The process of compilation
 ![the compile process](image.png)
+
+## You can also use default compute cap via -ptx
+`-ptx` can make nvcc use the default compute.
+```sh
+nvcc demo.cu demo -ptx
+```
