@@ -78,3 +78,5 @@ int main() {
 ```
 
 In this example, `cudaEventRecord` is used to record the start and stop events. `cudaEventElapsedTime` calculates the time elapsed between the two events, and the result is printed in milliseconds.
+
+Also, if you want to use `-nvprof` to monitor the time comsumption while running, you can use command `nvprof ./your_exe`, so you can monitor the result conveniently. 8.0 arch is not supported.
