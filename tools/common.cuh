@@ -1,4 +1,5 @@
 #pragma once
+// only include once
 #include <stdio.h>
 
 struct DeviceMemory {
@@ -129,4 +130,34 @@ cudaError_t ErrorCheck(cudaError_t error_code, const char* file_name,int linenum
         return error_code;
     }
     return error_code;
+}
+// calculate time without checking error
+float Calculate_Time_nocheck(cudaEvent_t start, cudaEvent_t stop){
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+
+    //cudaenventquery is a function that returns cudaSuccess if all operations have completed
+    cudaEventRecord(start, 0);
+    cudaEventQuery(start);// cannot use Errorcheck here
+    cudaEventRecord(stop, 0);
+    //cudaEventSynchronize is a function that waits for an event to complete
+    cudaEventSynchronize(stop);
+    float elapsedTime;
+    cudaEventElapsedTime(&elapsedTime, start, stop);
+    return elapsedTime;
+}
+
+// calculate time with checking error
+float Calculate_Time(cudaEvent_t start, cudaEvent_t stop, const char* file_name, int linenumber){
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    //cudaenventquery is a function that returns cudaSuccess if all operations have completed
+    ErrorCheck(cudaEventRecord(start, 0), file_name, linenumber);
+    cudaEventQuery(start);// cannot use Errorcheck here
+    ErrorCheck(cudaEventRecord(stop, 0), file_name, linenumber);
+    //cudaEventSynchronize is a function that waits for an event to complete
+    ErrorCheck(cudaEventSynchronize(stop), file_name, linenumber);
+    float elapsedTime;
+    ErrorCheck(cudaEventElapsedTime(&elapsedTime, start, stop), file_name, linenumber);
+    return elapsedTime;
 }
