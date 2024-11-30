@@ -1,5 +1,5 @@
 #pragma once
-#include<stdio.h>
+#include <stdio.h>
 
 struct DeviceMemory {
     float *_A;
@@ -119,4 +119,14 @@ void freeMemory(FullMemory fullMemory){
     cudaFree(fullMemory.deviceMemory._B);
     cudaFree(fullMemory.deviceMemory._C);
     printf("Memory free is successful\n");
+}
+
+cudaError_t ErrorCheck(cudaError_t error_code, const char* file_name,int linenumber){
+    if (error_code != cudaSuccess)
+    {
+        printf("Find CUDA error at %s:%d\r\n, Error Type %d (%s), means that %s", file_name, linenumber
+        ,error_code,cudaGetErrorName(error_code), cudaGetErrorString(error_code));
+        return error_code;
+    }
+    return error_code;
 }
