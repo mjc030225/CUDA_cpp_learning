@@ -1,7 +1,7 @@
 #pragma once
 // only include once
 #include <stdio.h>
-
+// #define CUDA_Check  ErrorCheck(cudaGetLastError(),__FILE__,__LINE__)
 struct DeviceMemory {
     float *_A;
     float *_B;
